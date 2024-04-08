@@ -8,6 +8,7 @@
     ],
     "env": {
       "APP_MODULE": "api_proxy:app"
-    }
+    },
+    "requires": ["python312"]
   }
 

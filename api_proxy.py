@@ -19,7 +19,12 @@ class APIProxy:
         self.additional_header_value = os.getenv("NEURELO_API_KEY")
 
     async def forward_request(self, request: Request, path: str):
-
+        print("Request", request.headers)
+        print("Request.query_params", request.query_params)
+        print("Request.body", await request.body())
+        print("Request.path_params", request.path_params)
+        print("Request.method", request.method)
+        
         auth_header = request.headers.get("Authorization")
         try:
             user = self.auth.validate_access_token_and_get_user(auth_header)
