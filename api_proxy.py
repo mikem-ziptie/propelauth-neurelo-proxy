@@ -31,7 +31,7 @@ class APIProxy:
         forward_url = f"{self.forward_domain}/{path}"
         headers = {key: value for key, value in request.headers.items()}
         headers[self.additional_header_name] = self.additional_header_value
-
+        print("Request url", forward_url)
         async with httpx.AsyncClient() as client:
             response = await client.request(
                 method=request.method,
@@ -40,7 +40,9 @@ class APIProxy:
                 content=await request.body(),
                 params=request.query_params,
             )
-
+        print("Response.text", response.text[:240], "...")
+        print("Response.status_code", response.status_code)
+        print("Response.headers", response.headers)
         return response.text, response.status_code, response.headers.items()
 
 
