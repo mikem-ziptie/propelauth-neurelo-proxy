@@ -28,9 +28,11 @@ class APIProxy:
             print("Invalid access token")
             raise HTTPException(status_code=401, detail="Invalid access token")
 
-        forward_url = f"{self.forward_domain}/{path}"
+        # Ensure no double slashes in the path
+        forward_url = f"{self.forward_domain}/{path.lstrip('/')}"
         headers = {key: value for key, value in request.headers.items()}
         headers[self.additional_header_name] = self.additional_header_value
+        print("Request path", path)
         print("Request url", forward_url)
         async with httpx.AsyncClient() as client:
             response = await client.request(
